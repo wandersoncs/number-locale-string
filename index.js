@@ -246,16 +246,16 @@ var currencyFormats = {
 	prespace: "{{code}} {{num}}"
 };
 
-function toLocaleString(locale, options) {
+function toLocaleString(num, locale, options) {
 	if (locale && locale.length < 2)
 		throw new RangeError("Invalid language tag: " + locale);
 
 	var sNum;
 
 	if (options && (options.minimumFractionDigits || options.minimumFractionDigits === 0)) {
-		sNum = this.toFixed(options.minimumFractionDigits);
+		sNum = num.toFixed(options.minimumFractionDigits);
 	} else {
-		sNum = this.toString();
+		sNum = num.toString();
 	}
 
 	sNum = mapMatch(transformForLocale, locale)(sNum, options);
