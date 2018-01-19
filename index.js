@@ -237,7 +237,7 @@ function toLocaleString(num, locale, options) {
 	}
 	var sNum;
 	if (options && (options.minimumFractionDigits || options.minimumFractionDigits === 0)) {
-		sNum = num.toFixed(options.minimumFractionDigits);
+		sNum = Number(num).toFixed(options.minimumFractionDigits);
 	} else {
 		sNum = num.toString();
 	}
