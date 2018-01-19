@@ -1,14 +1,15 @@
-var replaceSeparators = function (sNum, separators) {
+var locales = require('./src/locales').locales;
+
+function replaceSeparators(sNum, separators) {
 	var sNumParts = sNum.split('.');
 	if (separators && separators.thousands) {
 		sNumParts[0] = sNumParts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + separators.thousands);
 	}
 	sNum = sNumParts.join(separators.decimal);
-
 	return sNum;
-};
+}
 
-var renderFormat = function (template, props) {
+function renderFormat(template, props) {
 	for (var prop in props) {
 		if (props[prop].indexOf('-') !== -1) {
 			props[prop] = props[prop].replace('-', '');
@@ -16,14 +17,12 @@ var renderFormat = function (template, props) {
 		}
 		template = template.replace('{{' + prop + '}}', props[prop]);
 	}
-
 	return template;
-};
+}
 
-var mapMatch = function (map, locale) {
+function mapMatch(map, locale) {
 	var match = locale;
 	var language = locale && locale.toLowerCase().match(/^\w+/);
-
 	if (!map.hasOwnProperty(locale)) {
 		if (map.hasOwnProperty(language)) {
 			match = language;
@@ -31,71 +30,50 @@ var mapMatch = function (map, locale) {
 			match = 'en';
 		}
 	}
-
 	return map[match];
-};
+}
 
-var dotThousCommaDec = function (sNum) {
+function dotThousCommaDec(sNum) {
 	var separators = {
 		decimal: ',',
 		thousands: '.'
 	};
-
 	return replaceSeparators(sNum, separators);
-};
+}
 
-var commaThousDotDec = function (sNum) {
+function commaThousDotDec(sNum) {
 	var separators = {
 		decimal: '.',
 		thousands: ','
 	};
 
 	return replaceSeparators(sNum, separators);
-};
+}
 
-var spaceThousCommaDec = function (sNum) {
+function spaceThousCommaDec(sNum) {
 	var seperators = {
 		decimal: ',',
 		thousands: '\u00A0'
 	};
 
 	return replaceSeparators(sNum, seperators);
-};
+}
 
-var apostrophThousDotDec = function (sNum) {
+function apostrophThousDotDec(sNum) {
 	var seperators = {
 		decimal: '.',
 		thousands: '\u0027'
 	};
 
 	return replaceSeparators(sNum, seperators);
-};
+}
 
 var transformForLocale = {
-	en: commaThousDotDec,
-	'en-GB': commaThousDotDec,
-	'en-US': commaThousDotDec,
-	it: dotThousCommaDec,
-	fr: spaceThousCommaDec,
-	de: dotThousCommaDec,
-	'de-DE': dotThousCommaDec,
-	'de-AT': dotThousCommaDec,
-	'de-CH': apostrophThousDotDec,
-	'de-LI': apostrophThousDotDec,
-	'de-BE': dotThousCommaDec,
-	'nl': dotThousCommaDec,
-	'nl-BE': dotThousCommaDec,
-	'nl-NL': dotThousCommaDec,
-	ro: dotThousCommaDec,
-	'ro-RO': dotThousCommaDec,
-	ru: spaceThousCommaDec,
-	'ru-RU': spaceThousCommaDec,
-	hu: spaceThousCommaDec,
-	'hu-HU': spaceThousCommaDec,
-	'da-DK': dotThousCommaDec,
-	'nb-NO': spaceThousCommaDec,
-	'pt-BR': dotThousCommaDec
-};
+	'dotThousCommaDec': dotThousCommaDec,
+	'commaThousDotDec': commaThousDotDec,
+	'spaceThousCommaDec': spaceThousCommaDec,
+	'apostrophThousDotDec': apostrophThousDotDec
+}
 
 var currencyFormatMap = {
 	en: 'pre',
@@ -119,7 +97,8 @@ var currencyFormatMap = {
 	hu: 'post',
 	'hu-HU': 'post',
 	'da-DK': 'post',
-	'nb-NO': 'post'
+	'nb-NO': 'post',
+	'pt-BR': 'pre'
 };
 
 var currencySymbols = {
@@ -246,20 +225,23 @@ var currencyFormats = {
 	prespace: '{{code}} {{num}}'
 };
 
+/**
+ * @param {Number} num 
+ * @param {String} [locale] 
+ * @param {Intl.NumberFormatOptions} [options] 
+ * @returns {String}
+ */
 function toLocaleString(num, locale, options) {
-	if (locale && locale.length < 2)
+	if (locale && locale.length < 2) {
 		throw new RangeError('Invalid language tag: ' + locale);
-
+	}
 	var sNum;
-
 	if (options && (options.minimumFractionDigits || options.minimumFractionDigits === 0)) {
 		sNum = num.toFixed(options.minimumFractionDigits);
 	} else {
 		sNum = num.toString();
 	}
-
-	sNum = mapMatch(transformForLocale, locale)(sNum, options);
-
+	sNum = transformForLocale[mapMatch(locales, locale)](sNum, options);
 	if (options && options.currency && options.style === 'currency') {
 		var format = currencyFormats[mapMatch(currencyFormatMap, locale)];
 		if (options.currencyDisplay === 'code') {
@@ -274,7 +256,6 @@ function toLocaleString(num, locale, options) {
 			});
 		}
 	}
-
 	return sNum;
 }
 
