@@ -1,3 +1,6 @@
+[![npm version](https://badge.fury.io/js/number-locale-string.svg)](https://badge.fury.io/js/number-locale-string)
+
+
 # number-locale-string
 
 ## Install
