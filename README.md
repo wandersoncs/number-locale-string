@@ -15,7 +15,7 @@ const numberLocal = require('number-locale-string');
 
 let value = 1200.00;
 
-// valueString = '1.200,00'
+// valueString = '1.200'
 let valueString = numberLocal.toLocalString(value, 'pt-BR');
 
 // currencyString = R$1.200,00
