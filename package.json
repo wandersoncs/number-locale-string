@@ -1,16 +1,24 @@
 {
-  "name": "number-locale-string",
-  "version": "0.1.3",
-  "description": "Imprementation of Number.toLocaleString() to Node",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wandersoncs/number-to-locale-string.git"
-  },
-  "author": "wanderson <wandersoncorreiasouza@gmail.com>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/wandersoncs/number-to-locale-string/issues"
-  },
-  "homepage": "https://github.com/wandersoncs/number-to-locale-string#readme"
+	"name": "number-locale-string",
+	"version": "0.1.3",
+	"description": "Imprementation of Number.toLocaleString() to Node",
+	"main": "lib/index.js",
+	"scripts": {
+		"build": "babel src -d lib"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wandersoncs/number-to-locale-string.git"
+	},
+	"author": "wanderson <wandersoncorreiasouza@gmail.com>",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/wandersoncs/number-to-locale-string/issues"
+	},
+	"homepage": "https://github.com/wandersoncs/number-to-locale-string#readme",
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-es2015": "^6.24.1"
+	}
 }
