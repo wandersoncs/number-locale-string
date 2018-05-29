@@ -1,6 +1,6 @@
 {
 	"name": "number-locale-string",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "Imprementation of Number.toLocaleString() to Node",
 	"main": "lib/index.js",
 	"scripts": {
