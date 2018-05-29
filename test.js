@@ -1,4 +1,4 @@
-var numberLocale = require('./index');
+var numberLocale = require('./src/index');
 
 console.log(numberLocale.toLocaleString(1000.0));
 console.log(numberLocale.toLocaleString(10000, 'pt-BR'));
