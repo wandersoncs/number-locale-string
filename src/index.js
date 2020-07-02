@@ -92,7 +92,7 @@ function toLocaleString(num, locale, options) {
 		throw new RangeError('Invalid language tag: ' + locale);
 	}
 	var sNum;
-	if (options && (options.minimumFractionDigits || options.minimumFractionDigits === 0)) {
+	if (options && options.minimumFractionDigits !== undefined && !Number.isInteger(num)) {
 		sNum = Number(num).toFixed(options.minimumFractionDigits);
 	} else {
 		sNum = num.toString();
