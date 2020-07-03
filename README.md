@@ -1,4 +1,4 @@
-[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.2.1&x2=0)](https://badge.fury.io/js/number-locale-string)
+[![npm version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=js&type=6&v=0.4.0=0)](https://badge.fury.io/js/number-locale-string)
 
 
 # number-locale-string
